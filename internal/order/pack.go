@@ -1,8 +1,6 @@
 package order
 
-import (
-	"context"
-)
+import "context"
 
 // PackStorage defines the interface for retrieving available pack sizes.
 //

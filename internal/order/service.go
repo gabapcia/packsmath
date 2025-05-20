@@ -17,7 +17,7 @@ type service struct {
 }
 
 // NewService creates a new instance of the order service using the provided PackStorage
-func NewService(packStorage PackStorage) *service {
+func NewService(packStorage PackStorage) Service {
 	return &service{
 		packStorage: packStorage,
 	}
