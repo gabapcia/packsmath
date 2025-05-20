@@ -2,6 +2,7 @@ package pack_test
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	"github.com/gabapcia/packsmath/internal/pack"
@@ -41,6 +42,43 @@ func TestService_RegisterPackSize(t *testing.T) {
 
 		require.NoError(t, err)
 		assert.Equal(t, 1, len(mockStorage.RegisterPackSizeCalls()))
+	})
+}
+
+func TestService_ListPackSizes(t *testing.T) {
+	t.Run("Success", func(t *testing.T) {
+		expected := []int{250, 500, 1000}
+
+		mockStorage := &mock.PackStorageMock{
+			ListPackSizesFunc: func(ctx context.Context) ([]int, error) {
+				return expected, nil
+			},
+		}
+
+		svc := pack.NewService(mockStorage)
+		result, err := svc.ListPackSizes(context.Background())
+
+		require.NoError(t, err)
+		assert.Equal(t, expected, result)
+		assert.Equal(t, 1, len(mockStorage.ListPackSizesCalls()))
+	})
+
+	t.Run("Returns Error From Storage", func(t *testing.T) {
+		expectedErr := errors.New("storage failure")
+
+		mockStorage := &mock.PackStorageMock{
+			ListPackSizesFunc: func(ctx context.Context) ([]int, error) {
+				return nil, expectedErr
+			},
+		}
+
+		svc := pack.NewService(mockStorage)
+		result, err := svc.ListPackSizes(context.Background())
+
+		require.Error(t, err)
+		assert.Nil(t, result)
+		assert.Equal(t, expectedErr, err)
+		assert.Equal(t, 1, len(mockStorage.ListPackSizesCalls()))
 	})
 }
 

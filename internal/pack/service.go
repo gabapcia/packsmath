@@ -9,6 +9,9 @@ type Service interface {
 	// RegisterPackSize registers a new pack size
 	RegisterPackSize(ctx context.Context, size int) error
 
+	// ListPackSizes returns the list of available pack sizes
+	ListPackSizes(ctx context.Context) ([]int, error)
+
 	// DeletePackSize deletes an existing pack size
 	DeletePackSize(ctx context.Context, size int) error
 }

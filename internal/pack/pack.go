@@ -20,6 +20,9 @@ type PackStorage interface {
 	// RegisterPackSize adds a new pack size
 	RegisterPackSize(ctx context.Context, size int) error
 
+	// ListPackSizes returns the list of available pack sizes
+	ListPackSizes(ctx context.Context) ([]int, error)
+
 	// DeletePackSize removes an existing pack size
 	DeletePackSize(ctx context.Context, size int) error
 }
@@ -27,6 +30,11 @@ type PackStorage interface {
 // RegisterPackSize registers a new pack size via the underlying storage
 func (s *service) RegisterPackSize(ctx context.Context, size int) error {
 	return s.packStorage.RegisterPackSize(ctx, size)
+}
+
+// ListPackSizes retrieves the list of available pack sizes from the underlying storage.
+func (s *service) ListPackSizes(ctx context.Context) ([]int, error) {
+	return s.packStorage.ListPackSizes(ctx)
 }
 
 // DeletePackSize deletes a pack size via the underlying storage

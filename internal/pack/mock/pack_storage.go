@@ -22,6 +22,9 @@ var _ pack.PackStorage = &PackStorageMock{}
 //			DeletePackSizeFunc: func(ctx context.Context, size int) error {
 //				panic("mock out the DeletePackSize method")
 //			},
+//			ListPackSizesFunc: func(ctx context.Context) ([]int, error) {
+//				panic("mock out the ListPackSizes method")
+//			},
 //			RegisterPackSizeFunc: func(ctx context.Context, size int) error {
 //				panic("mock out the RegisterPackSize method")
 //			},
@@ -35,6 +38,9 @@ type PackStorageMock struct {
 	// DeletePackSizeFunc mocks the DeletePackSize method.
 	DeletePackSizeFunc func(ctx context.Context, size int) error
 
+	// ListPackSizesFunc mocks the ListPackSizes method.
+	ListPackSizesFunc func(ctx context.Context) ([]int, error)
+
 	// RegisterPackSizeFunc mocks the RegisterPackSize method.
 	RegisterPackSizeFunc func(ctx context.Context, size int) error
 
@@ -47,6 +53,11 @@ type PackStorageMock struct {
 			// Size is the size argument value.
 			Size int
 		}
+		// ListPackSizes holds details about calls to the ListPackSizes method.
+		ListPackSizes []struct {
+			// Ctx is the ctx argument value.
+			Ctx context.Context
+		}
 		// RegisterPackSize holds details about calls to the RegisterPackSize method.
 		RegisterPackSize []struct {
 			// Ctx is the ctx argument value.
@@ -56,6 +67,7 @@ type PackStorageMock struct {
 		}
 	}
 	lockDeletePackSize   sync.RWMutex
+	lockListPackSizes    sync.RWMutex
 	lockRegisterPackSize sync.RWMutex
 }
 
@@ -92,6 +104,38 @@ func (mock *PackStorageMock) DeletePackSizeCalls() []struct {
 	mock.lockDeletePackSize.RLock()
 	calls = mock.calls.DeletePackSize
 	mock.lockDeletePackSize.RUnlock()
+	return calls
+}
+
+// ListPackSizes calls ListPackSizesFunc.
+func (mock *PackStorageMock) ListPackSizes(ctx context.Context) ([]int, error) {
+	if mock.ListPackSizesFunc == nil {
+		panic("PackStorageMock.ListPackSizesFunc: method is nil but PackStorage.ListPackSizes was just called")
+	}
+	callInfo := struct {
+		Ctx context.Context
+	}{
+		Ctx: ctx,
+	}
+	mock.lockListPackSizes.Lock()
+	mock.calls.ListPackSizes = append(mock.calls.ListPackSizes, callInfo)
+	mock.lockListPackSizes.Unlock()
+	return mock.ListPackSizesFunc(ctx)
+}
+
+// ListPackSizesCalls gets all the calls that were made to ListPackSizes.
+// Check the length with:
+//
+//	len(mockedPackStorage.ListPackSizesCalls())
+func (mock *PackStorageMock) ListPackSizesCalls() []struct {
+	Ctx context.Context
+} {
+	var calls []struct {
+		Ctx context.Context
+	}
+	mock.lockListPackSizes.RLock()
+	calls = mock.calls.ListPackSizes
+	mock.lockListPackSizes.RUnlock()
 	return calls
 }
 
