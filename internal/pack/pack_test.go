@@ -6,6 +6,7 @@ import (
 
 	"github.com/gabapcia/packsmath/internal/pack"
 	"github.com/gabapcia/packsmath/internal/pack/mock"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -20,7 +21,7 @@ func TestService_RegisterPackSize(t *testing.T) {
 		}
 
 		svc := pack.NewService(mockStorage)
-		err := svc.RegisterPackSize(context.Background(), 1000)
+		err := svc.RegisterPackSize(t.Context(), 1000)
 
 		require.Error(t, err)
 		assert.Equal(t, pack.ErrPackSizeAlreadyRegistered, err)
@@ -36,7 +37,7 @@ func TestService_RegisterPackSize(t *testing.T) {
 		}
 
 		svc := pack.NewService(mockStorage)
-		err := svc.RegisterPackSize(context.Background(), 500)
+		err := svc.RegisterPackSize(t.Context(), 500)
 
 		require.NoError(t, err)
 		assert.Equal(t, 1, len(mockStorage.RegisterPackSizeCalls()))
@@ -55,7 +56,7 @@ func TestService_DeletePackSize(t *testing.T) {
 		}
 
 		svc := pack.NewService(mockStorage)
-		err := svc.DeletePackSize(context.Background(), 2000)
+		err := svc.DeletePackSize(t.Context(), 2000)
 
 		require.Error(t, err)
 		assert.Equal(t, pack.ErrPackSizeNotFound, err)
@@ -71,7 +72,7 @@ func TestService_DeletePackSize(t *testing.T) {
 		}
 
 		svc := pack.NewService(mockStorage)
-		err := svc.DeletePackSize(context.Background(), 500)
+		err := svc.DeletePackSize(t.Context(), 500)
 
 		require.NoError(t, err)
 		assert.Equal(t, 1, len(mockStorage.DeletePackSizeCalls()))
