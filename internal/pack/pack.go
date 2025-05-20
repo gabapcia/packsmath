@@ -14,6 +14,8 @@ var (
 )
 
 // PackStorage defines methods to register and delete pack sizes
+//
+//go:generate moq -pkg mock -out mock/pack_storage.go . PackStorage
 type PackStorage interface {
 	// RegisterPackSize adds a new pack size
 	RegisterPackSize(ctx context.Context, size int) error

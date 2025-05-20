@@ -3,6 +3,8 @@ package pack
 import "context"
 
 // Service defines the operations available for managing pack sizes
+//
+//go:generate moq -pkg mock -out mock/service.go . Service
 type Service interface {
 	// RegisterPackSize registers a new pack size
 	RegisterPackSize(ctx context.Context, size int) error

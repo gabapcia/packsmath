@@ -1,0 +1,3 @@
+generate-mocks:
+	@[ -x "$$(go env GOPATH)/bin/moq" ] || go install github.com/matryer/moq@latest
+	@go generate ./...
