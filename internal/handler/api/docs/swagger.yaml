@@ -1,0 +1,114 @@
+definitions:
+  api.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  api.PackOrderRequest:
+    properties:
+      order:
+        type: integer
+    type: object
+  api.PackOrderResponse:
+    additionalProperties:
+      type: integer
+    type: object
+  api.RegisterPackRequest:
+    properties:
+      size:
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: An application that can calculate the number of packs we need to ship
+    to the customer
+  title: PacksMath API
+paths:
+  /orders:
+    post:
+      consumes:
+      - application/json
+      description: Packs an order
+      parameters:
+      - description: PackOrderRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/api.PackOrderRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.PackOrderResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Pack An Order
+  /packs:
+    get:
+      consumes:
+      - application/json
+      description: List all pack sizes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: integer
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: List Pack Sizes
+    post:
+      consumes:
+      - application/json
+      description: Register a new pack size
+      parameters:
+      - description: RegisterPackRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/api.RegisterPackRequest'
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Register Pack Size
+  /packs/{size}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a pack size
+      parameters:
+      - description: pack size
+        in: path
+        name: size
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Delete Pack Size
+swagger: "2.0"

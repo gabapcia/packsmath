@@ -16,6 +16,7 @@ type RegisterPackRequest struct {
 // @Summary      Register Pack Size
 // @Description  Register a new pack size
 // @Accept       json
+// @Param request body RegisterPackRequest true "RegisterPackRequest"
 // @Success      204
 // @Failure      409  {object}  ErrorResponse
 // @Failure      500  {object}  ErrorResponse

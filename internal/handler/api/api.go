@@ -6,7 +6,9 @@ import (
 	"github.com/gabapcia/packsmath/internal/order"
 	"github.com/gabapcia/packsmath/internal/pack"
 
+	_ "github.com/gabapcia/packsmath/internal/handler/api/docs"
 	"github.com/gofiber/fiber/v2"
+	fiberSwagger "github.com/swaggo/fiber-swagger"
 )
 
 // @title PacksMath API
@@ -17,9 +19,13 @@ func Start(port int, packService pack.Service, orderService order.Service) error
 		ErrorHandler:          errorHandler,
 	})
 
+	app.Get("/docs/*", fiberSwagger.WrapHandler)
+
 	app.Post("/packs", RegisterPackSizeHandler(packService))
 	app.Get("/packs", ListPackSizesHandler(packService))
-	app.Delete("/packs", DeletePackSizeHandler(packService))
+	app.Delete("/packs/:size", DeletePackSizeHandler(packService))
+
+	app.Post("/orders", PackOrderHandler(orderService))
 
 	return app.Listen(fmt.Sprintf(":%d", port))
 }
