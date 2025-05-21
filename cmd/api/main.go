@@ -16,7 +16,7 @@ func main() {
 	orderService := order.NewService(memoryStorage)
 
 	// Handlers
-	if err := api.Start(3000, packService, orderService); err != nil {
+	if err := api.Run(3000, packService, orderService); err != nil {
 		panic(err)
 	}
 }

@@ -13,7 +13,7 @@ import (
 
 // @title PacksMath API
 // @description An application that can calculate the number of packs we need to ship to the customer
-func Start(port int, packService pack.Service, orderService order.Service) error {
+func Run(port int, packService pack.Service, orderService order.Service) error {
 	app := fiber.New(fiber.Config{
 		DisableStartupMessage: true,
 		ErrorHandler:          errorHandler,

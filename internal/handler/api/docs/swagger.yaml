@@ -7,6 +7,7 @@ definitions:
   api.PackOrderRequest:
     properties:
       order:
+        description: Quantity of items requested in the order
         type: integer
     type: object
   api.PackOrderResponse:
@@ -16,6 +17,7 @@ definitions:
   api.RegisterPackRequest:
     properties:
       size:
+        description: The size of the pack to register
         type: integer
     type: object
 info:

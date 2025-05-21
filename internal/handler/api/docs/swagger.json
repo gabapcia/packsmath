@@ -153,6 +153,7 @@
             "type": "object",
             "properties": {
                 "order": {
+                    "description": "Quantity of items requested in the order",
                     "type": "integer"
                 }
             }
@@ -167,6 +168,7 @@
             "type": "object",
             "properties": {
                 "size": {
+                    "description": "The size of the pack to register",
                     "type": "integer"
                 }
             }

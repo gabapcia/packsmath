@@ -162,6 +162,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "order": {
+                    "description": "Quantity of items requested in the order",
                     "type": "integer"
                 }
             }
@@ -176,6 +177,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "size": {
+                    "description": "The size of the pack to register",
                     "type": "integer"
                 }
             }
