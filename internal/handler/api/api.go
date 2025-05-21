@@ -20,8 +20,7 @@ import (
 // mounts Swagger documentation at `/docs/*`, and starts the server on the specified port
 func Run(port int, packService pack.Service, orderService order.Service) error {
 	app := fiber.New(fiber.Config{
-		DisableStartupMessage: true,
-		ErrorHandler:          ErrorHandler,
+		ErrorHandler: ErrorHandler,
 	})
 
 	// Swagger docs endpoint

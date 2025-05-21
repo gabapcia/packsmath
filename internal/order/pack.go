@@ -32,6 +32,7 @@ func resolvePackCombination(order int, packSizes []int) map[int]int {
 		if res, ok := memo[remaining]; ok {
 			return res
 		}
+
 		var best *result
 
 		for _, size := range packSizes {
@@ -39,15 +40,19 @@ func resolvePackCombination(order int, packSizes []int) map[int]int {
 			if next < 0 {
 				continue
 			}
+
 			sub := dfs(next)
 			if sub == nil {
 				continue
 			}
+
 			total := sub.totalItems + size
 			counts := make(map[int]int)
+
 			for k, v := range sub.counts {
 				counts[k] = v
 			}
+
 			counts[size]++
 
 			curr := &result{
