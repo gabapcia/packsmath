@@ -19,8 +19,6 @@ type PackOrderResponse map[int]int
 // It expects a JSON body with an `order` field and returns a map of pack sizes to quantities.
 // In case of parsing or service errors, the handler returns the appropriate HTTP status codes.
 //
-// Swagger annotations:
-//
 //	@Summary      Pack An Order
 //	@Description  Packs an order
 //	@Accept       json

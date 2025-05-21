@@ -63,7 +63,7 @@ type DeletePackSizeRequest struct {
 	Size uint64 `params:"size"` // The pack size to be deleted
 }
 
-// DeletePackSizeHandler handles DELETE requests to remove a specific pack size.
+// DeletePackSizeHandler handles DELETE requests to remove a specific pack size
 //
 //	@Summary      Delete Pack Size
 //	@Description  Deletes a pack size
